@@ -5,6 +5,17 @@ import matplotlib
 matplotlib.rcParams.update({'font.size': 22})
 
 
+def mape(y_true, y_pred):
+    # mean absolute percentage error
+    y_true, y_pred = np.array(y_true), np.array(y_pred)
+    return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+
+
+def rmse(y_true, y_pred):
+    # root mean square error
+    return np.sqrt(((y_true - y_pred) ** 2).mean())
+
+
 def lmbda(x):  # used to get lambda(m-1)
     total = 0
     for t in range(no_of_services):
@@ -109,15 +120,6 @@ for s in range(1, no_of_services):
 for c in conc:
     rm_ee_pred.append(ET[1][c-1])
     rb_ee_pred.append(ET[2][c-1])
-
-
-def mape(y_true, y_pred):
-    y_true, y_pred = np.array(y_true), np.array(y_pred)
-    return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
-
-
-def rmse(y_true, y_pred):
-    return np.sqrt(((y_true - y_pred) ** 2).mean())
 
 
 print('-----------------------------------------------------')

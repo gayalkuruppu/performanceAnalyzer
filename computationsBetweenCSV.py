@@ -13,6 +13,7 @@ test_mins = 8   # filtered no of test minutes
 
 
 def compute(basepath, folder, subfolder):
+    # generating new information columns using the data of a csv
     means = []
     df = pd.read_csv(basepath+folder+'/'+subfolder+'/'+'summary/summary.csv')
     for i in range(no_conc):
@@ -22,6 +23,7 @@ def compute(basepath, folder, subfolder):
 
 
 def shortening_csv(basepath, tofolder):
+    # removing unwanted data columns and keep only the useful data columns
     df = pd.read_csv(basepath+tofolder+'/summary.csv')
     newdf = df.filter(['Scenario Name', 'Concurrent Users', 'Message Size (Bytes)', 'Throughput (Requests/sec)',
                        'Average Response Time (ms)', 'Average Users in the System'], axis=1)
@@ -29,6 +31,7 @@ def shortening_csv(basepath, tofolder):
 
 
 def add_to_csv(data, basepath, tofolder, service):
+    # adding new data columns to a csv
     df = pd.read_csv(basepath+tofolder+'/summary_new.csv')
     df[service] = data
     df.to_csv(basepath+tofolder+'/summary_new.csv')

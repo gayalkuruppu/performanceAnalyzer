@@ -4,6 +4,7 @@ import os
 
 
 def concat(path, folder, subfolder):
+    # this function is used to concatenate the test results csv files of multiple tests to a single csv
     path += folder+'/'+subfolder+'/'
     csvfiles = sorted(glob.glob(path+'*.csv'))
 

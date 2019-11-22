@@ -4,8 +4,13 @@ import pandas as pd
 import matplotlib
 matplotlib.rcParams.update({'font.size': 22})
 
+# choose the test case to generate comparison plots
+test = 1
 
-def lmbda(x):  # used to get lambda(m-1)
+
+def lmbda(x):
+    # used to get lambda(m-1). this is a parameter related to arrival rate.
+    # an intermediate step of the mean value analysis
     total = 0
     for t in range(no_of_services):
         total += p_ratios[t] * ET[t][x]
@@ -18,8 +23,6 @@ services = ['ballerina', 'netty']
 conc = [1, 10, 50, 100, 500]
 data = pd.read_csv(path+'bal100summary.csv')
 
-test = 1
-
 r_ee = data.iloc[5*(test-1):5*test, 4]
 x_ee = data.iloc[5*(test-1):5*test, 3]
 rm_ee = data.iloc[5*(test-1):5*test, 11]
@@ -28,7 +31,7 @@ rb_ee = data.iloc[5*(test-1):5*test, 7]
 throughput = []
 concurrency = 500
 
-
+# different test cases
 if test == 1:
     serviceRates = [50000, 8900, 12500]
     testname = 'Simple pass-through - Simple echo'
@@ -52,7 +55,7 @@ serverNames = ['JMeter Client', 'Pass-through Service', 'Backend Service', 'Tota
 overheads = [0, 0, 0]   # overheads in seconds
 # routingProb[i][j] = routing probability from i th server to j th server
 routingProb = [[0, 1, 0], [0, 0, 1], [1, 0, 0]]     # how to convert the routing Prob matrix into p_ratios
-p_ratios = [0.25, 0.5, 0.25]
+p_ratios = [0.25, 0.5, 0.25]    # enter the routing probabilities of the queueing network
 # p_ratios = [1/3, 1/3, 1/3]
 # p_ratios = [1/2, 1/2]
 
@@ -93,8 +96,6 @@ E[R]
 for n in range(1, concurrency):
     for s in range(no_of_services):
         ET[s][n] = (1 + p_ratios[s]*lmbda(n-1)*ET[s][n-1])*ET[s][0]
-
-
 '''
 
 
